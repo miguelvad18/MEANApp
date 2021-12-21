@@ -1,1 +1,33 @@
-<p>tu puta madre</p>
+<div ngIf="usuariologeado && !mostrarChat" class="chatIconContainer" (click)="mostrarChat = true">
+  <img src="//img.icons8.com/ios-filled/50/000000/sms.png"/>" class="chatIcon" alt="chat Icon">
+</div>
+
+<div class="card text-center cardContainer" ngIf="usuariologeado && mostrarChat">
+    
+    <div class="card-header">
+      CHAT
+      <div class="closeIcon" (clock)="mostrarChat=false">x</div>
+    </div>
+    <div class="card-body">
+      <div id="contenedorDeMensajes" class="contenedorDeMensajes h-100">
+        <p ngFor="let mensaje of mensajes" class="msj p-2" 
+        [ngClass]="(usuariologeado.uid==mensaje.emisor)? 'enviado' : 'recibido'"
+        >
+          {{mensaje.texto}}
+        </p>
+      </div>
+    </div>
+
+    <form class="card-footer text-muted" input-group (ngSubmit)="enviarMensaje()">
+      <input type="text" class="form-control" placeholder="Envia un mensaje..." [(ngMode)]="nuevoMensaje"
+      [ngModelOptions]="{standalone: true}">
+      <div class="input-group-append" (click)="enviarMensaje()">
+              <span class="input-group-text" id="basic-addon1">
+                  @
+                  <img class="imgEnviar" src="https://img.icons8.com/search" width="20px" alt="send message">
+              </span>
+
+            </div>
+            
+    </form>
+  </div>
