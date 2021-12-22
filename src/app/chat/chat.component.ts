@@ -7,42 +7,42 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  mostrarChat = false;
-  usuariologueado: any;
-  nuevoMensaje: String= "";
-  mensajes: any = [{
+  showChat = false;
+  userLogin: any;
+  newMessage: String= "";
+  message: any = [{
     emisor: "id",
     texto: "hola que tal"
   }, {
-    emisor: "id",
-    texto: "todo bien, vos?"
+    transmitter: "id",
+    text: "todo bien, vos?"
   }, {
-    emisor: "id",
-    texto: "todo perfecto"
+    transmitter: "id",
+    text: "todo perfecto"
   }, {
-    emisor: "id",
-    texto: "hola gente"
+    transmitter: "id",
+    text: "hola gente"
   }, {
-    emisor: "id",
-    texto: "que onda"
+    transmitter: "id",
+    text: "que onda"
   },];
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.authService.getUserLogged().subcribe(usuario => {
-      this.usuariologueado = usuario;
+    this.authService.getUserLogged().subcribe(user => {
+      this.userLogin= user;
     })
   }
   enviarMensaje(){
-    if (this.nuevoMensaje == "") return; 
-    console.log(this.nuevoMensaje);
-    let mensaje={
-      emisor: this.usuariologueado.uid,
-      texto: this.nuevoMensaje
+    if (this.newMessage == "") return; 
+    console.log(this.newMessage);
+    let message={
+      emisor: this.userLogin.uid,
+      texto: this.newMessage
     }
-    this.mensajes.push(mensaje);
+    this.message.push(message);
 
-    this.nuevoMensaje = "";
+    this.newMessage = "";
 
     setTimeout(() => {
       this.scrollToTheLastElementByClassName();
@@ -56,6 +56,6 @@ export class ChatComponent implements OnInit {
     let toppos = ultimo.offsetTop;
 
     //@ts-ignore
-    document.getElementById('contenedorDeMensajes')?.scrollTop = toppos;
+    document.getElementById('messageContainer')?.scrollTop = toppos;
   }
 }
